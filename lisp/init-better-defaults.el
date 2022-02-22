@@ -3,7 +3,8 @@
 ;; 自动加载外部修改过的文件
 (global-auto-revert-mode t)
 
-(global-linum-mode t)
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode t))
 
 ;; 关闭自动备份文件
 (setq make-backup-files nil)

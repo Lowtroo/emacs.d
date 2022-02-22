@@ -17,7 +17,7 @@
 		      lsp-treemacs
 		      lsp-ui
 		      ;; --- Auto-completion ---
-		      company
+		      ;; company		
 		      ;; --- Better Editor ---
 		      hungry-delete
 		      swiper
@@ -65,6 +65,14 @@
 (smartparens-global-mode t)
 
 (global-company-mode t)
+(setq company-minimum-prefix-length 1
+      company-idle-delay 0.05)
+
+(defun baal-setup-lsp-company ()
+  (setq-local company-backends
+              '(company-capf company-dabbrev company-dabbrev-code)))
+
+(add-hook 'lsp-completion-mode-hook #'baal-setup-lsp-company)
 
 (provide 'init-packages)
 
