@@ -17,7 +17,7 @@
 		      lsp-treemacs
 		      lsp-ui
 		      ;; --- Auto-completion ---
-		      ;; company		
+		      company		
 		      ;; --- Better Editor ---
 		      hungry-delete
 		      swiper
@@ -26,10 +26,11 @@
 		      expand-region
 		      term-keys
 		      smart-mode-line
+		      cnfonts
 		      ;; --- Major Mode ---
 
 		      lua-mode
-		      
+		      org-roam
 		      ;; --- Minor Mode ---
 		      exec-path-from-shell
 		      lsp-mode

@@ -17,6 +17,10 @@
 (require 'init-lsp)
 (require 'init-termkeys)
 (require 'init-smart-mode-line)
+(require 'init-org-roam)
+(require 'init-org-latex)
+(require 'init-cnfonts)
+
 
 
 
