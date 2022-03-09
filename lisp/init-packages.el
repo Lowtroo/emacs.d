@@ -29,7 +29,7 @@
 		      ;; --- Major Mode ---
 
 		      lua-mode
-		      
+		      org-roam
 		      ;; --- Minor Mode ---
 		      exec-path-from-shell
 		      lsp-mode

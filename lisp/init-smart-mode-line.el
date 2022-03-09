@@ -1,4 +1,4 @@
-(sml/setup)
+;;(sml/setup)
 
 
 (provide 'init-smart-mode-line)

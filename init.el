@@ -17,11 +17,4 @@
 (require 'init-lsp)
 (require 'init-termkeys)
 (require 'init-smart-mode-line)
-
-
-
-
-
-(setq server-auth-dir "/home/xieyuhuai/.emacs.d/server")
-
-
+(require 'init-org-roam)
