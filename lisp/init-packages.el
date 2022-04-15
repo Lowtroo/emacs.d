@@ -26,6 +26,7 @@
 		      expand-region
 		      term-keys
 		      smart-mode-line
+		      format-all
 		      ;; --- Major Mode ---
 
 		      lua-mode
@@ -33,6 +34,7 @@
 		      ;; --- Minor Mode ---
 		      exec-path-from-shell
 		      lsp-mode
+		      eglot
 		      ;; --- Themes ---
 		      monokai-theme
 		      dracula-theme

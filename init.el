@@ -10,7 +10,7 @@
 (require 'init-ui)
 (require 'init-better-defaults)
 (require 'init-keybindings)
-;;(require 'init-inputmethod)
+(require 'init-inputmethod)
 (require 'init-ccmode)
 (require 'init-luamode)
 (require 'init-helm)
