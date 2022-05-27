@@ -24,7 +24,7 @@
 (scroll-bar-mode -1)
 (setq inhibit-splash-screen t)
 
-(set-frame-font "Hack 20" nil t)
+(set-frame-font "Hack 14" nil t)
 (global-hl-line-mode t)
 
 (provide 'init-ui)

@@ -66,7 +66,7 @@
 (smartparens-global-mode t)
 
 (global-company-mode t)
-(setq company-minimum-prefix-length 1
+(setq company-minimum-prefix-length 3
       company-idle-delay 0.05)
 
 
