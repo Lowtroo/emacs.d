@@ -38,9 +38,11 @@
 (use-package yaml-mode)
 (use-package lua-mode)
 (use-package org-roam)
+(use-package ox-hugo)
 (use-package exec-path-from-shell)
 (use-package lsp-mode)
 (use-package kaolin-themes)
+(use-package meow)
 
 
 ;; helm settings  BEGIN
@@ -119,7 +121,7 @@
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-;;(scroll-bar-mode -1)
+(scroll-bar-mode -1)
 (setq inhibit-splash-screen t)
 
 (set-frame-font "Hack 12" nil t)
@@ -267,6 +269,10 @@
 	     ("begin" "$1" "$" "$$" "\\(" "\\[")
 			       ))
 ;; org latex END
+
+;; ox-hugo BEGIN
+(require 'ox-hugo)
+;; ox-hugo END
 
 
 ;; cnfonts BEGIN
