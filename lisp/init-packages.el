@@ -24,6 +24,7 @@
 		      counsel
 		      smartparens
 		      expand-region
+              avy
 		      term-keys
 		      smart-mode-line
 		      format-all
@@ -31,9 +32,11 @@
 
 		      lua-mode
 		      org-roam
+		      cmake-mode
 		      ;; --- Minor Mode ---
 		      exec-path-from-shell
 		      lsp-mode
+		      meow
 		      eglot
 		      ;; --- Themes ---
 		      monokai-theme
