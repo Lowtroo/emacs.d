@@ -38,6 +38,7 @@
 (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
 
 (global-set-key (kbd "C-c h x") 'helm-register)
+(global-set-key (kbd "C-c h g") 'helm-do-ag-project-root)
 
 (helm-autoresize-mode t)
 

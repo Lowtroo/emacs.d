@@ -24,10 +24,11 @@
 		      counsel
 		      smartparens
 		      expand-region
-              avy
+		      avy
 		      term-keys
 		      smart-mode-line
 		      format-all
+		      company
 		      ;; --- Major Mode ---
 
 		      lua-mode
@@ -47,7 +48,8 @@
 		      pyim
 		      pyim-basedict
 		      ;; cxx language
-		      
+		      ;; find-file-in-project
+		      find-file-in-project
 		      ) "Default packages")
 
 (setq package-selected-packages my/packages)

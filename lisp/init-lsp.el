@@ -8,4 +8,8 @@
               '(company-capf company-dabbrev company-dabbrev-code)))
 
 (add-hook 'lsp-completion-mode-hook #'baal-setup-lsp-company)
+(setq lsp-completion-provider :none)
+(setq lsp-completion-show-detail nil)
+(setq lsp-completion-show-kind nil)
+(add-hook 'lsp-completion-mode-hook #'baal-setup-lsp-company)
 (provide 'init-lsp)

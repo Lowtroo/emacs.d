@@ -6,6 +6,6 @@
 
 
 ;; 显示5个候选词
-(setq pyim-page-length 5)
+(setq pyim-page-length 7)
 
 (provide 'init-inputmethod)
