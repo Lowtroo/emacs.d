@@ -1,5 +1,12 @@
-(require 'kaolin-themes)
-(load-theme 'kaolin-galaxy t)
+(require 'zenburn-theme)
+(load-theme 'zenburn t)
+(zenburn-with-color-variables
+  (custom-theme-set-faces
+   'zenburn
+   ;;;;; hl-line-mode
+   `(hl-line-face ((t (:background ,zenburn-bg+05))))
+   `(hl-line ((t (:background ,zenburn-bg+05))))
+   ))
 (require 'pyim)
 (require 'pyim-basedict)
 

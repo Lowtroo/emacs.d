@@ -43,6 +43,7 @@
 		      monokai-theme
 		      dracula-theme
 		      kaolin-themes
+		      zenburn-theme
 		      ;; solarized-theme
 		      ;; input method
 		      pyim

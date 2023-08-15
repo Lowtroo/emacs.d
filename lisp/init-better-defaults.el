@@ -55,10 +55,7 @@
 
 (sp-local-pair '(emacs-lisp-mode lisp-interaction-mode) "'" nil :actions nil)
 
-
-(setq xterm-mouse-mode t)
-
-
+(setq scroll-conservatively 101)
 
 
 (provide 'init-better-defaults)
