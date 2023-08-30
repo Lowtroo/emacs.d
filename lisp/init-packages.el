@@ -34,10 +34,10 @@
 		      lua-mode
 		      org-roam
 		      cmake-mode
+		      go-mode
 		      ;; --- Minor Mode ---
 		      exec-path-from-shell
 		      lsp-mode
-		      meow
 		      eglot
 		      ;; --- Themes ---
 		      monokai-theme
