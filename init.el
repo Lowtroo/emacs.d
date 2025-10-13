@@ -2,20 +2,22 @@
 
 
 ;; 快速打开配置文件
-(defun open-my-init-file()
-  (interactive)
-  (find-file "~/.emacs.d/init.el"))
 
 (require 'init-packages)
-(require 'init-ui)
+(require 'init-cnfonts)
 (require 'init-better-defaults)
+(require 'init-smart-mode-line)
+(require 'init-ui)
+(require 'init-ivy)
 (require 'init-keybindings)
-(require 'init-inputmethod)
+;;(require 'init-inputmethod)
 (require 'init-ccmode)
 (require 'init-luamode)
-(require 'init-helm)
+(require 'init-orgmode)
+;;(require 'init-helm)
 (require 'init-lsp)
 (require 'init-termkeys)
-(require 'init-smart-mode-line)
 (require 'init-find-file-in-project)
-
+;;(require 'init-org-roam)
+(require 'init-org-latex)
+(require 'init-dictionary)

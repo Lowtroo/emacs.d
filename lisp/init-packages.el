@@ -1,4 +1,4 @@
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -10,16 +10,17 @@
 
 ;; Add packages
 (defvar my/packages '(
-		      helm
-		      helm-ag
-		      helm-lsp
-		      helm-xref
+		      ;;helm
+		      ;;helm-ag
+		      ;;helm-lsp
+		      ;;helm-xref
 		      lsp-treemacs
 		      lsp-ui
 		      ;; --- Auto-completion ---
 		      ;; company		
 		      ;; --- Better Editor ---
 		      hungry-delete
+		      ivy
 		      swiper
 		      counsel
 		      smartparens
@@ -29,6 +30,7 @@
 		      smart-mode-line
 		      format-all
 		      company
+		      cnfonts
 		      ;; --- Major Mode ---
 
 		      lua-mode
@@ -38,7 +40,7 @@
 		      ;; --- Minor Mode ---
 		      exec-path-from-shell
 		      lsp-mode
-		      eglot
+		      ;;eglot
 		      ;; --- Themes ---
 		      monokai-theme
 		      dracula-theme
