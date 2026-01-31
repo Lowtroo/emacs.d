@@ -5,6 +5,7 @@
 (setopt ivy-height 20)
 
 (keymap-global-set "C-s" #'swiper-isearch)
+(keymap-global-set "C-c h r" #'counsel-rg)
 (keymap-global-set "M-x" #'counsel-M-x)
 (keymap-global-set "C-x C-f" #'counsel-find-file)
 (keymap-global-set "M-y" #'counsel-yank-pop)
@@ -18,4 +19,5 @@
 (keymap-global-set "C-x b" #'ivy-switch-buffer)
 (keymap-global-set "C-c v" #'ivy-push-view)
 (keymap-global-set "C-c V" #'ivy-pop-view)
+
 (provide 'init-ivy)
