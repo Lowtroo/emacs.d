@@ -10,11 +10,11 @@
 
 (global-set-key (kbd "M-=") 'er/expand-region)
 
-;; (setq mac-command-modifier 'meta ;; the position of it is like Alt key
-;;       mac-option-modifier 'super ;;
-;;       mac-right-command-modifier 'meta ;; is also reachable for right thumb
-;;       mac-right-option-modifier 'none  ;; use MacOS defined Option
-;;       )
+(setq mac-command-modifier 'meta ;; the position of it is like Alt key
+      mac-option-modifier 'super ;;
+      mac-right-command-modifier 'meta ;; is also reachable for right thumb
+      mac-right-option-modifier 'none  ;; use MacOS defined Option
+      )
 
 (with-eval-after-load 'dired
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
