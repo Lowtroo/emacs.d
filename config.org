@@ -1,0 +1,320 @@
+#+title: My Emacs Config
+#+property: header-args:emacs-lisp :tangle config.el :results silent
+
+* Basic settings
+#+begin_src emacs-lisp
+  (setq ring-bell-function 'ignore)
+  (global-auto-revert-mode t)
+  (global-display-line-numbers-mode 1)
+  (setq make-backup-files nil)
+  (setq auto-save-default nil)
+
+  (setq-default indent-tabs-mode t)
+
+  (recentf-mode 1)
+  (setq recentf-max-menu-items 25)
+
+  (setq show-paren-delay 0)
+  (show-paren-mode 1)
+
+  (delete-selection-mode t)
+
+  (setq scroll-conservatively 101)
+
+  (setq inhibit-startup-screen t)
+  (setq ring-bell-function #'ignore)
+
+  (electric-pair-mode 1)
+
+  (column-number-mode 1)
+  (save-place-mode 1)
+  (savehist-mode 1)
+
+#+end_src
+
+* UI
+#+begin_src emacs-lisp
+  (use-package emacs
+    :init
+    (load-theme 'modus-operandi-tinted t))
+
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-hl-line-mode t)
+
+  (setq initial-frame-alist
+        '((width . 140)
+  	(height . 40)
+  	(top . 150)
+  	(left . 537)))
+#+end_src
+
+* Editing Helpers
+#+begin_src emacs-lisp
+  (defun my/indent-buffer ()
+    "Indent the whole current buffer."
+    (interactive)
+    (indent-region (point-min) (point-max)))
+
+  (defun my/indent-region-or-buffer ()
+    "Indent active region, or the whole buffer if no region is active."
+    (interactive)
+    (save-excursion
+      (if (use-region-p)
+          (progn
+            (indent-region (region-beginning) (region-end))
+            (message "Indented region."))
+        (my/indent-buffer)
+        (message "Indented buffer."))))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package hungry-delete
+    :ensure t
+    :init
+    (global-hungry-delete-mode 1))
+#+end_src
+
+* Keybindings
+#+begin_src emacs-lisp
+  (defun open-my-init-file()
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+  (global-set-key (kbd "<f2> m") 'open-my-init-file)
+  (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
+
+  (global-set-key (kbd "M-=") 'er/expand-region)
+
+  (setq mac-command-modifier 'meta ;; the position of it is like Alt key
+      mac-option-modifier 'super ;;
+      mac-right-command-modifier 'meta ;; is also reachable for right thumb
+      mac-right-option-modifier 'none  ;; use MacOS defined Option
+      )
+  
+#+end_src
+
+* Fonts
+#+begin_src emacs-lisp
+  (defun my/setup-fonts ()
+      "Setup fonts for coding, reading, and Chinese."
+      (interactive)
+      (set-face-attribute 'default nil
+                          :family "Maple Mono Normal NL NF CN"
+                          :height 120)
+      (set-face-attribute 'fixed-pitch nil
+                          :family "Maple Mono Normal NL NF CN"
+                          :height 120)
+      (set-face-attribute 'variable-pitch nil
+                          :family "Noto Sans"
+                          :height 120)
+
+      (set-fontset-font t 'han (font-spec :family "Noto Sans CJK SC"))
+      (set-fontset-font t 'cjk-misc (font-spec :family "Noto Sans CJK SC")))
+
+    (add-hook 'after-init-hook #'my/setup-fonts)
+#+end_src
+* Dired
+#+begin_src emacs-lisp
+  (use-package dired
+    :ensure nil
+    :commands (dired dired-jump)
+    :custom
+    (dired-dwim-target t)
+    :config
+    (put 'dired-find-alternate-file 'disabled nil)
+    (require 'dired-x)
+    (define-key dired-mode-map (kbd "RET") #'dired-find-alternate-file))
+#+end_src
+
+* Ivy
+#+begin_src emacs-lisp
+  (use-package ivy
+    :init
+    (ivy-mode 1)
+    :custom
+    (ivy-use-virtual-buffers t)
+    (ivy-count-format "(%d/%d) ")
+    (ivy-height 20)
+    (enable-recursive-minibuffers t))
+
+  (use-package counsel
+    :after ivy
+    :bind (("M-x"     . counsel-M-x)
+           ("C-x C-f" . counsel-find-file)
+           ("C-c f g"   . counsel-git)
+  	 ("C-c f j" .  counsel-file-jump)
+  	 ("C-c h r" . counsel-rg)
+  	 ("M-y" . counsel-yank-pop)
+  	 ("<f1> f" . counsel-describe-function)
+  	 ("<f1> v" . counsel-describe-variable)
+  	 ("<f1> o" . counsel-describe-symbol)
+  	 ("<f1> l" . counsel-find-library)
+  	 ("<f2> i" . counsel-info-lookup-symbol)
+  	 ("<f2> u" . counsel-unicode-char)
+  	 ("<f2> j" . counsel-set-variable)
+  	 ("C-x b" . ivy-switch-buffer)
+  	 ("C-c v" . ivy-push-view)
+  	 ("C-c V" . ivy-pop-view)
+  	 ))
+  (setq ivy-re-builders-alist
+      '((read-file-name-internal . ivy--regex-fuzzy)
+        (t . ivy--regex-plus)))
+
+  (use-package swiper
+    :after ivy
+    :bind (("C-s" . swiper)))
+#+end_src
+
+* Find-file-in-project
+#+begin_src emacs-lisp
+  (use-package find-file-in-project
+  :init
+  (setq ffip-use-rust-fd t)
+  :bind (("C-c f a" . find-file-in-project-at-point)
+         ("C-c f s" . find-file-in-project-by-selected)))
+#+end_src
+
+* Corfu
+#+begin_src emacs-lisp
+  (use-package corfu
+    :ensure t
+    :custom
+    (corfu-auto t)
+    (corfu-cycle t)
+    :init
+    (global-corfu-mode 1))
+#+end_src
+
+* Avy
+#+begin_src emacs-lisp
+  (use-package avy
+  :ensure t
+  :bind (("C-:" . avy-goto-char-timer)
+         ("M-g w" . avy-goto-word-1)
+         ("M-g l" . avy-goto-line)))
+#+end_src
+
+* Org
+#+begin_src emacs-lisp
+  (use-package org
+    :ensure nil
+    :bind (("C-c l" . org-store-link)
+  	 ("C-c a" . org-agenda)
+  	 ("C-c c" . org-capture))
+    :hook ((org-mode . visual-line-mode)
+           (org-mode . org-indent-mode))
+    :custom
+    (org-startup-folded nil)
+    (org-hide-emphasis-markers t)
+    (org-src-fontify-natively t)
+    (org-src-tab-acts-natively t)
+    (org-confirm-babel-evaluate nil))
+
+  (setq org-directory "~/org/")
+  (setq org-default-notes-file (expand-file-name "inbox.org" org-directory))
+
+  (setq org-agenda-files (quote ("~/diary")))
+  (setq org-capture-templates
+      '(("j" "Journal" plain
+  	 (file+olp+datetree (expand-file-name "journal.org" org-agenda-files))
+  	 "\n%?\n%i\n" :empty-lines-after 1)))
+#+end_src
+
+
+#+begin_src emacs-lisp
+    ;; (defun my/org-font-setup ()
+    ;; "Use variable pitch in Org prose, fixed pitch in code-like elements."
+    ;; (set-face-attribute 'org-document-title nil
+    ;; 			:inherit 'variable-pitch
+    ;; 			:weight 'bold
+    ;; 			:height 1.3)
+    ;; (set-face-attribute 'org-level-1 nil
+    ;; 		      :inherit '(outline-1 variable-pitch)
+    ;; 		      :weight 'bold
+    ;; 		      :height 1.2)
+    ;; (set-face-attribute 'org-level-2 nil
+    ;; 		      :inherit '(outline-2 variable-pitch)
+    ;; 		      :weight 'bold
+    ;; 		      :height 1.15)
+    ;; (set-face-attribute 'org-level-3 nil
+    ;; 		      :inherit '(outline-3 variable-pitch)
+    ;; 		      :weight 'bold
+    ;; 		      :height 1.1)
+    ;; (set-face-attribute 'org-level-4 nil
+    ;;                     :inherit '(outline-4 variable-pitch)
+    ;;                     :weight 'bold)
+
+
+  ;;   (set-face-attribute 'org-block nil :inherit '(fixed-pitch))
+  ;;   (set-face-attribute 'org-code nil :inherit '(fixed-pitch))
+  ;;   (set-face-attribute 'org-table nil :inherit '(fixed-pitch))
+  ;;   (set-face-attribute 'org-verbatim nil :inherit '(fixed-pitch))
+  ;;   (set-face-attribute 'org-special-keyword nil :inherit '(fixed-pitch))
+  ;;   (set-face-attribute 'org-meta-line nil :inherit '(fixed-pitch))
+  ;;   (set-face-attribute 'org-checkbox nil :inherit '(fixed-pitch)))
+
+  ;; (add-hook 'org-mode-hook #'variable-pitch-mode)
+  ;; (add-hook 'org-mode-hook #'my/org-font-setup)
+#+end_src
+
+* cdlatex
+#+begin_src emacs-lisp
+  (use-package cdlatex
+    :ensure t
+    :hook ((LaTeX-mode . turn-on-cdlatex)
+           (org-mode . turn-on-cdlatex)))
+  (setq org-preview-latex-default-process 'dvisvgm)
+#+end_src
+
+* CC Mode
+#+begin_src emacs-lisp
+  (use-package cc-mode
+    :ensure nil
+    :init
+    (setq c-basic-offset 4
+  	c-default-style '((java-mode . "java")
+                            (awk-mode . "awk")
+                            (other . "linux"))
+  	)
+    :config
+    (define-key c-mode-base-map (kbd "RET") #'c-context-line-break))
+
+;;  (setq-default c-electric-flag nil)
+#+end_src
+
+* Lua mode
+#+begin_src emacs-lisp
+  (use-package lua-mode
+    :mode "\\.lua\\'"
+    :config
+    (setq lua-indent-level 4
+  	lua-indent-nested-block-content-align nil
+  	lua-indent-close-paren-align t))
+#+end_src
+
+* Auto tangle config.org
+#+begin_src emacs-lisp
+  (defun my/org-auto-tangle-config ()
+    "Auto-tangle config.org when saving it."
+    (when (string-equal (file-truename (buffer-file-name))
+                        (file-truename (expand-file-name "config.org" user-emacs-directory)))
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
+
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (when (string-equal (file-truename (buffer-file-name))
+                                  (file-truename (expand-file-name "config.org" user-emacs-directory)))
+                (add-hook 'after-save-hook #'my/org-auto-tangle-config nil t))))
+
+  (defun my/reload-config ()
+    "Tangle and reload my Emacs config."
+    (interactive)
+    (let ((org-confirm-babel-evaluate nil)
+          (config-org (expand-file-name "config.org" user-emacs-directory))
+          (config-el  (expand-file-name "config.el"  user-emacs-directory)))
+      (org-babel-tangle-file config-org config-el "emacs-lisp")
+      (load-file config-el)
+      (message "Reloaded config from %s" config-org)))
+#+end_src
