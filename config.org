@@ -97,8 +97,25 @@
 * Fonts
 #+begin_src emacs-lisp
   (defun my/setup-fonts ()
-      "Setup fonts for coding, reading, and Chinese."
-      (interactive)
+    "Setup fonts for coding, reading, and Chinese on different systems"
+    (interactive)
+    (cond
+     ;; MacOS
+     ((eq system-type 'darwin)
+      (set-face-attribute 'default nil
+                          :family "Menlo"
+                          :height 140)
+      (set-face-attribute 'fixed-pitch nil
+                          :family "Menlo"
+                          :height 140)
+      (set-face-attribute 'variable-pitch nil
+                          :family "Helvetica"
+                          :height 140)
+
+      (set-fontset-font t 'han (font-spec :family "PingFang SC"))
+      (set-fontset-font t 'cjk-misc (font-spec :family "PingFang SC")))
+     ;; Linux
+     ((eq system-type 'gnu/linux)
       (set-face-attribute 'default nil
                           :family "Maple Mono Normal NL NF CN"
                           :height 120)
@@ -110,9 +127,15 @@
                           :height 120)
 
       (set-fontset-font t 'han (font-spec :family "Noto Sans CJK SC"))
-      (set-fontset-font t 'cjk-misc (font-spec :family "Noto Sans CJK SC")))
+      (set-fontset-font t 'cjk-misc (font-spec :family "Noto Sans CJK SC"))
+      )
+     ;; fallback
+     (t
+      (message "No font present for system-type: %s" system-type))
+     )
+    )
 
-    (add-hook 'after-init-hook #'my/setup-fonts)
+  (add-hook 'after-init-hook #'my/setup-fonts)
 #+end_src
 * Dired
 #+begin_src emacs-lisp
