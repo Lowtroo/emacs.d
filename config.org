@@ -163,7 +163,7 @@
 
   (use-package swiper
     :after ivy
-    :bind (("C-s" . swiper)))
+    :bind (("C-s" . swiper-isearch)))
 #+end_src
 
 * Find-file-in-project
@@ -291,6 +291,13 @@
     (setq lua-indent-level 4
   	lua-indent-nested-block-content-align nil
   	lua-indent-close-paren-align t))
+#+end_src
+
+* Yaml mode
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+    :ensure t
+    :mode ("\\.ya?ml\\'" . yaml-mode))
 #+end_src
 
 * Auto tangle config.org
