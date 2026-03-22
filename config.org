@@ -78,20 +78,27 @@
 
 * Keybindings
 #+begin_src emacs-lisp
+
   (defun open-my-init-file()
     (interactive)
     (find-file "~/.emacs.d/config.org"))
   (global-set-key (kbd "<f2> m") 'open-my-init-file)
   (global-set-key (kbd "C-M-\\") 'indent-region-or-buffer)
 
-  (global-set-key (kbd "M-=") 'er/expand-region)
-
   (setq mac-command-modifier 'meta ;; the position of it is like Alt key
-      mac-option-modifier 'super ;;
-      mac-right-command-modifier 'meta ;; is also reachable for right thumb
-      mac-right-option-modifier 'none  ;; use MacOS defined Option
-      )
-  
+        mac-option-modifier 'super ;;
+        mac-right-command-modifier 'meta ;; is also reachable for right thumb
+        mac-right-option-modifier 'none  ;; use MacOS defined Option
+        )
+
+#+end_src
+
+* expand-region
+#+begin_src emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :bind (("M-=" . er/expand-region)
+  	 ("M--" . er/contract-region)))
 #+end_src
 
 * Fonts
@@ -103,10 +110,10 @@
      ;; MacOS
      ((eq system-type 'darwin)
       (set-face-attribute 'default nil
-                          :family "Menlo"
+                          :family "SF Mono"
                           :height 140)
       (set-face-attribute 'fixed-pitch nil
-                          :family "Menlo"
+                          :family "SF Mono"
                           :height 140)
       (set-face-attribute 'variable-pitch nil
                           :family "Helvetica"
