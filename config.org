@@ -30,6 +30,17 @@
   (save-place-mode 1)
   (savehist-mode 1)
 
+  (defun my/copy-region-for-chrome (beg end)
+    (interactive "r")
+    (let ((text (buffer-substring-no-properties beg end)))
+      (with-temp-buffer
+        (insert text)
+        (call-process-region
+         (point-min) (point-max)
+         "wl-copy" nil nil nil)))
+    (kill-new (buffer-substring-no-properties beg end))
+    (message "Copied via wl-copy"))
+
 #+end_src
 
 * UI
@@ -45,9 +56,7 @@
 
   (setq initial-frame-alist
         '((width . 140)
-  	(height . 40)
-  	(top . 150)
-  	(left . 537)))
+  	(height . 40)))
 #+end_src
 
 * Editing Helpers
@@ -212,8 +221,22 @@
     :custom
     (corfu-auto t)
     (corfu-cycle t)
+    (corfu-auto-prefix 2)
     :init
     (global-corfu-mode 1))
+  (use-package cape
+    :ensure t
+    :hook
+    ((text-mode org-mode) . my/setup-cape-dict)
+    :init
+    (defun my/setup-cape-dict ()
+        (let ((dicts '("/usr/share/dict/american-english"
+  		     "/usr/share/dict/ngerman")))
+  	(setq-local cape-dict-file (seq-filter #'file-exists-p dicts))
+  	(setq-local completion-at-point-functions '(cape-dict))
+  	)
+        )
+  )
 #+end_src
 
 * Avy
@@ -241,14 +264,13 @@
     (org-src-tab-acts-natively t)
     (org-confirm-babel-evaluate nil))
 
-  (setq org-directory "~/org/")
-  (setq org-default-notes-file (expand-file-name "inbox.org" org-directory))
+  ;; (setq org-directory "~/org/")
+  ;; (setq org-default-notes-file (expand-file-name "inbox.org" org-directory))
 
-  (setq org-agenda-files (quote ("~/diary")))
-  (setq org-capture-templates
-      '(("j" "Journal" plain
-  	 (file+olp+datetree (expand-file-name "journal.org" org-agenda-files))
-  	 "\n%?\n%i\n" :empty-lines-after 1)))
+  ;; (setq org-capture-templates
+  ;;     '(("j" "Journal" plain
+  ;; 	 (file+olp+datetree (expand-file-name "journal.org" org-agenda-files))
+  ;; 	 "\n%?\n%i\n" :empty-lines-after 1)))
 #+end_src
 
 
@@ -288,13 +310,25 @@
   ;; (add-hook 'org-mode-hook #'my/org-font-setup)
 #+end_src
 
+* Org Agenda
+#+begin_src emacs-lisp
+  (setq org-agenda-files '("~/courses/courses.org"
+  			 "~/agendas/inbox.org"
+  			 "~/agendas/calendar.org"
+  			 "~/agendas/tasks.org"))
+  (setq org-default-notes-file "~/agendas/inbox.org")
+  (setq org-capture-templates '(("i" "Inbox" entry
+  			       (file "~/agendas/inbox.org")
+  			       "* TODO %?\n  %U\n")))
+#+end_src
+
 * cdlatex
 #+begin_src emacs-lisp
-  (use-package cdlatex
-    :ensure t
-    :hook ((LaTeX-mode . turn-on-cdlatex)
-           (org-mode . turn-on-cdlatex)))
-  (setq org-preview-latex-default-process 'dvisvgm)
+  ;; (use-package cdlatex
+  ;;   :ensure t
+  ;;   :hook ((LaTeX-mode . turn-on-cdlatex)
+  ;;          (org-mode . turn-on-cdlatex)))
+  ;; (setq org-preview-latex-default-process 'dvisvgm)
 #+end_src
 
 * CC Mode
@@ -332,18 +366,15 @@
 
 * Auto tangle config.org
 #+begin_src emacs-lisp
-  (defun my/org-auto-tangle-config ()
-    "Auto-tangle config.org when saving it."
-    (when (string-equal (file-truename (buffer-file-name))
-                        (file-truename (expand-file-name "config.org" user-emacs-directory)))
-      (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
+  (defun my/maybe-enable-auto-tangle ()
+    "Enable auto-tangle only for config.org."
+    (let ((bf (buffer-file-name)))
+      (when (and bf
+                 (string-equal (file-truename bf)
+                               (file-truename (expand-file-name "config.org" user-emacs-directory))))
+        (add-hook 'after-save-hook #'my/org-auto-tangle-config nil t))))
 
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (when (string-equal (file-truename (buffer-file-name))
-                                  (file-truename (expand-file-name "config.org" user-emacs-directory)))
-                (add-hook 'after-save-hook #'my/org-auto-tangle-config nil t))))
+  (add-hook 'org-mode-hook #'my/maybe-enable-auto-tangle)
 
   (defun my/reload-config ()
     "Tangle and reload my Emacs config."

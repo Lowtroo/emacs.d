@@ -44,13 +44,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(auctex cdlatex cmake-mode cnfonts company corfu counsel
-	    dracula-theme exec-path-from-shell expand-region
-	    find-file-in-project format-all go-mode hungry-delete
-	    kaolin-themes lsp-treemacs lsp-ui lua-mode monokai-theme
-	    org-roam pyim-basedict smart-mode-line smartparens
-	    term-keys zenburn-theme)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
