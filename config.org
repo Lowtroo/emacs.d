@@ -9,6 +9,9 @@
   (setq make-backup-files nil)
   (setq auto-save-default nil)
 
+  (auto-save-visited-mode 1)
+  (setq auto-save-visited-interval 5)
+
   (setq-default indent-tabs-mode t)
 
   (recentf-mode 1)
@@ -321,7 +324,21 @@
   			       (file "~/agendas/inbox.org")
   			       "* TODO %?\n  %U\n")))
 #+end_src
+* Org Reveal.js
+#+begin_src emacs-lisp
+  (use-package org-re-reveal
+    :ensure t
+    :after org
+    :config
+    (require 'org-re-reveal)
 
+    ;; 用 reveal.js 4 或 5，先不要直接用无版本号 latest
+    (setq org-re-reveal-revealjs-version "4")
+    (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@5.1.0")
+
+    ;; 启用 notes / highlight 这类插件
+    (setq org-re-reveal-plugins '(notes highlight)))
+#+end_src
 * cdlatex
 #+begin_src emacs-lisp
   ;; (use-package cdlatex
@@ -362,6 +379,14 @@
   (use-package yaml-mode
     :ensure t
     :mode ("\\.ya?ml\\'" . yaml-mode))
+#+end_src
+
+* magit
+#+begin_src emacs-lisp
+  (use-package magit
+  :ensure t
+  :bind
+  ("C-x g" . magit-status))
 #+end_src
 
 * Auto tangle config.org
