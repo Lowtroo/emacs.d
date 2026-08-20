@@ -347,7 +347,24 @@
   ;;          (org-mode . turn-on-cdlatex)))
   ;; (setq org-preview-latex-default-process 'dvisvgm)
 #+end_src
-
+* AUCTeX
+#+begin_src emacs-lisp
+  (use-package tex
+    :ensure auctex
+    :defer t
+    :hook
+    ((LaTeX-mode . LaTeX-math-mode)
+     (LaTeX-mode . turn-on-reftex))
+    :config
+    (setq TeX-auto-save t
+          TeX-parse-self t
+          TeX-PDF-mode t
+          TeX-save-query nil
+          TeX-source-correlate-mode t
+          TeX-source-correlate-method 'synctex
+          TeX-source-correlate-start-server t
+          reftex-plug-into-AUCTeX t))
+#+end_src
 * CC Mode
 #+begin_src emacs-lisp
   (use-package cc-mode
